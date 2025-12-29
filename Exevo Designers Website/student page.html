@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exevo Academy | 2026 Enrollment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        royal: {
+                            50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8',
+                            500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+                            800: '#3730a3', 900: '#1e1b4b', 950: '#03030d', 
+                        }
+                    },
+                    animation: {
+                        'slow-spin': 'spin 20s linear infinite',
+                        'reveal': 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #03030d; color: #eef2ff; cursor: none; overflow-x: hidden; }
+        @media (max-width: 1024px) { body { cursor: auto; } #cursor, #cursor-ring { display: none; } }
+
+        .hero-text {
+            font-size: clamp(3rem, 10vw, 8.5rem);
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .outline-text { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
+
+        #cursor {
+            width: 8px; height: 8px; background: white; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000;
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-ring {
+            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mask-reveal { overflow: hidden; }
+        .mask-reveal span {
+            display: inline-block;
+            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .curriculum-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .curriculum-card:hover {
+            background: #4f46e5;
+            transform: translateY(-10px);
+        }
+
+        .blob { position: absolute; filter: blur(140px); z-index: -1; opacity: 0.2; }
+
+        /* Mobile Menu Transitions */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased dark">
+
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <div class="blob w-[600px] h-[600px] bg-royal-600 top-[-10%] right-[-10%] animate-slow-spin"></div>
+
+    <nav class="fixed top-0 w-full z-[60] px-6 py-8 transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="window.location.href='index.html'">
+                <div class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter">ACADEMY</span>
+            </div>
+
+            <div class="hidden lg:flex gap-12 items-center text-[11px] font-bold uppercase tracking-[0.2em]">
+                <a href="#curriculum" class="hover:text-royal-400 transition-colors">Curriculum</a>
+                <a href="#pricing" class="hover:text-royal-400 transition-colors">Pricing</a>
+                <a href="#faq" class="hover:text-royal-400 transition-colors">FAQ</a>
+                <a href="index.html" class="px-8 py-4 bg-white text-black rounded-full hover:bg-royal-600 hover:text-white transition-all duration-500">Back to Network</a>
+            </div>
+
+            <button id="menu-toggle" class="lg:hidden w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white relative z-[70]">
+                <i data-lucide="menu" id="toggle-icon-menu"></i>
+                <i data-lucide="x" id="toggle-icon-close" class="hidden"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[85%] sm:w-[60%] bg-royal-950/98 backdrop-blur-2xl z-[65] lg:hidden flex flex-col p-10 pt-32 shadow-2xl border-l border-white/5">
+        <div class="flex flex-col gap-8 text-3xl font-bold uppercase tracking-tighter">
+            <a href="#curriculum" class="mobile-link hover:text-royal-400">Curriculum</a>
+            <a href="#pricing" class="mobile-link hover:text-royal-400">Pricing</a>
+            <a href="#faq" class="mobile-link hover:text-royal-400">FAQ</a>
+            <a href="apply.html" class="mobile-link text-royal-500">Apply Now</a>
+            <a href="index.html" class="mobile-link text-gray-400 text-xl pt-10">Back to Network</a>
+        </div>
+    </div>
+
+    <section class="min-h-screen pt-40 pb-20 px-6 flex flex-col justify-center">
+        <div class="max-w-[1400px] mx-auto w-full">
+            <div class="mask-reveal mb-8">
+                <span class="text-royal-400 font-bold uppercase tracking-[0.4em] text-sm">Enrollment Open — Intake 2026</span>
+            </div>
+            
+            <h1 class="hero-text mb-12">
+                <div class="mask-reveal"><span>Master</span></div>
+                <div class="mask-reveal flex items-center gap-4 md:gap-8">
+                    <span class="outline-text">Digital</span>
+                    <div class="w-20 h-10 md:w-40 md:h-20 bg-royal-600 rounded-full inline-block align-middle"></div>
+                </div>
+                <div class="mask-reveal"><span>Craftsmanship</span></div>
+            </h1>
+
+            <div class="grid md:grid-cols-2 gap-20 items-end mt-12">
+                <p class="text-2xl text-gray-400 font-light leading-relaxed">
+                    A zero-to-hero creative residency designed for the next generation of designers, developers, and marketers. Learn from the network that builds for the world.
+                </p>
+                <div class="flex flex-col items-end gap-4">
+                    <div class="text-right">
+                        <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Limited Spots</p>
+                        <p class="text-3xl font-black">24 / 50 Left</p>
+                    </div>
+                    <a href="apply.html" class="px-12 py-6 bg-royal-600 rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform">Reserve Your Seat</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="py-40 px-6 bg-white text-black rounded-[4rem]">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-black/10 pb-12">
+                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">The<br>Curriculum</h2>
+                <p class="max-w-xs text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">4 Months. 12 Modules. <br>Professional Portfolio Guaranteed.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="curriculum-card p-12 bg-gray-50 rounded-[3rem] space-y-8">
+                    <span class="text-6xl font-black opacity-10">01</span>
+                    <h3 class="text-3xl font-black uppercase tracking-tighter">Visual Thinking</h3>
+                    <p class="text-gray-600">Master typography, color theory, and the fundamentals of high-end branding.</p>
+                </div>
+                <div class="curriculum-card p-12 bg-gray-50 rounded-[3rem] space-y-8 md:mt-20">
+                    <span class="text-6xl font-black opacity-10">02</span>
+                    <h3 class="text-3xl font-black uppercase tracking-tighter">Digital Product</h3>
+                    <p class="text-gray-600">UI/UX architecture, wireframing, and interactive prototyping in Figma.</p>
+                </div>
+                <div class="curriculum-card p-12 bg-gray-50 rounded-[3rem] space-y-8">
+                    <span class="text-6xl font-black opacity-10">03</span>
+                    <h3 class="text-3xl font-black uppercase tracking-tighter">Motion & 3D</h3>
+                    <p class="text-gray-600">Bringing interfaces to life with After Effects and Spline integration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-40 px-6">
+        <div class="max-w-[1400px] mx-auto">
+            <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-32 text-center italic outline-text">Invest in Yourself</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="glass p-16 rounded-[4rem] flex flex-col justify-between group hover:border-royal-500 transition-colors">
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-4xl font-black uppercase tracking-tight">The Practitioner</h3>
+                            <span class="px-4 py-1 border border-white/20 rounded-full text-[10px] uppercase font-bold tracking-widest">Self-Paced</span>
+                        </div>
+                        <div class="text-7xl font-black">$499 <span class="text-xl font-normal text-gray-500">/ One-time</span></div>
+                        <ul class="space-y-4 opacity-60">
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Full Curriculum Access</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Private Discord Access</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Monthly Q&A sessions</li>
+                        </ul>
+                    </div>
+                    <a href="apply.html" class="block text-center mt-12 w-full py-6 rounded-full border border-white/20 font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Select Tier</a>
+                </div>
+
+                <div class="bg-royal-600 p-16 rounded-[4rem] flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-10 right-10 rotate-12 opacity-10 scale-150">
+                        <i data-lucide="zap" class="w-64 h-64"></i>
+                    </div>
+                    <div class="space-y-8 relative z-10">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-4xl font-black uppercase tracking-tight">The Pro Network</h3>
+                            <span class="px-4 py-1 bg-white text-royal-600 rounded-full text-[10px] uppercase font-bold tracking-widest">Most Popular</span>
+                        </div>
+                        <div class="text-7xl font-black">$1,299 <span class="text-xl font-normal opacity-60">/ Limited</span></div>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Everything in Practitioner</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> 1-on-1 Mentorship (4 Sessions)</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Guaranteed Network Internship</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4"></i> Job Placement Assistance</li>
+                        </ul>
+                    </div>
+                    <a href="apply.html" class="block text-center mt-12 w-full py-6 bg-white text-black rounded-full font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all relative z-10">Secure Your Spot</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-40 px-6 bg-white text-black rounded-t-[4rem]">
+        <div class="max-w-[1000px] mx-auto">
+            <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-20 text-center">Frequently Asked</h2>
+            
+            <div class="space-y-4">
+                <div class="border-b border-black/10 py-8 group cursor-pointer">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold uppercase tracking-tight">Do I need prior design experience?</h4>
+                        <i data-lucide="plus" class="w-6 h-6 group-hover:rotate-45 transition-transform"></i>
+                    </div>
+                    <p class="text-gray-500 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500">No. We start from the absolute basics and build up to professional industry standards within 4 months.</p>
+                </div>
+                <div class="border-b border-black/10 py-8 group cursor-pointer">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold uppercase tracking-tight">Will I get a job after completion?</h4>
+                        <i data-lucide="plus" class="w-6 h-6 group-hover:rotate-45 transition-transform"></i>
+                    </div>
+                    <p class="text-gray-500 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500">The Pro Network tier includes guaranteed internships within our network for top performers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 bg-black">
+        <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12 opacity-40">
+            <p class="text-xs font-bold tracking-widest uppercase italic">Exevo Academy — Intake 01 // 2026</p>
+            <div class="flex gap-12 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html">Home</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <p class="text-[10px]">© 2025 EXEVO ACADEMY.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('toggle-icon-menu');
+        const iconClose = document.getElementById('toggle-icon-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            const isActive = mobileMenu.classList.toggle('active');
+            iconMenu.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+            document.body.style.overflow = isActive ? 'hidden' : 'auto';
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                cursorRing.style.left = (e.clientX - 20) + 'px';
+                cursorRing.style.top = (e.clientY - 20) + 'px';
+            }, 60);
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button, .curriculum-card, .group');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.style.transform = 'scale(2)';
+                cursorRing.style.background = 'rgba(255,255,255,1)';
+                cursorRing.style.mixBlendMode = 'difference';
+                cursor.style.opacity = '0';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.style.transform = 'scale(1)';
+                cursorRing.style.background = 'transparent';
+                cursorRing.style.mixBlendMode = 'normal';
+                cursor.style.opacity = '1';
+            });
+        });
+
+        // Sticky Nav logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(3, 3, 13, 0.8)';
+                nav.style.backdropFilter = 'blur(10px)';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
